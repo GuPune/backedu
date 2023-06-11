@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-const checkbox = ref(true);
-</script>
 
 <template>
     <v-row class="d-flex mb-3">
@@ -28,5 +24,58 @@ const checkbox = ref(true);
         <v-col cols="12" class="pt-0">
             <v-btn to="/" color="primary" size="large" block   flat>Sign in</v-btn>
         </v-col>
+
+           <v-col cols="12" class="pt-0">
+          
+        </v-col>
+        <v-col cols="12" class="pt-0">
+               <p data-testid="counter-values">
+                 Counter: {{ getCount }}
+    
+    </p>
+
+
+            
+        </v-col>
+
+
+       
+ 
+
+  <v-btn  @click="increment">
+  Button
+</v-btn>
+
+
+
+        
     </v-row>
+   
 </template>
+
+
+
+
+
+<script>
+
+
+
+import { useCounterStore } from "../../stores/counter";
+import { storeToRefs } from 'pinia';
+import { defineComponent } from 'vue'
+
+
+export default defineComponent({
+ setup() {
+    const store = useCounterStore()
+    const getCount = computed(() => store.getCount)
+    const { increment } = store
+    return { getCount, increment }
+  },
+})
+</script>
+
+
+
+

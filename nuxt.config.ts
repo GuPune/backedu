@@ -2,13 +2,16 @@
 export default defineNuxtConfig({
   ssr: false,
   modules: [
-    [
-      '@pinia/nuxt',
-      {
-        autoImports: ['defineStore', 'acceptHMRUpdate'],
-      },
-    ],
+      '@pinia/nuxt'
   ],
+
+  imports: {
+    dirs: ['./stores'],
+  },
+
+  pinia: {
+    autoImports: ['defineStore', 'acceptHMRUpdate'],
+  },
   
   build: {
     transpile: ["vuetify"],
