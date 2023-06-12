@@ -2,6 +2,11 @@
 import UiParentCard from '@/components/shared/UiParentCard.vue';
 import Heading from "@/components/style-components/typography/Heading.vue";
 import Default from "@/components/style-components/typography/DefaultText.vue";
+
+definePageMeta({
+    middleware: ["auth"]
+    // or middleware: 'auth'
+  })
 </script>
 
 <template>
@@ -16,3 +21,5 @@ import Default from "@/components/style-components/typography/DefaultText.vue";
         </v-col>
     </v-row>
 </template>
+
+

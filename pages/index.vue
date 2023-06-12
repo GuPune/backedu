@@ -6,6 +6,13 @@ import MonthlyEarning from '@/components/dashboard/MonthlyEarnings.vue';
 import RecentTransaction from '@/components/dashboard/RecentTransaction.vue';
 import ProductPerformance from '@/components/dashboard/ProductPerformance.vue';
 import ProductCards from '@/components/dashboard/ProductCards.vue';
+import { storeToRefs } from 'pinia';
+import { defineComponent } from 'vue';
+
+definePageMeta({
+    middleware: 'auth' // this should match the name of the file inside the middleware directory 
+})
+
 </script>
 <template>
     <v-row>
@@ -43,3 +50,4 @@ import ProductCards from '@/components/dashboard/ProductCards.vue';
         </v-col>
     </v-row>
 </template>
+

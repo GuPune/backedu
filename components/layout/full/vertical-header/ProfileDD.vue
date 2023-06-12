@@ -1,5 +1,19 @@
 <script setup lang="ts">
 import { UserIcon, MailIcon, ListCheckIcon } from 'vue-tabler-icons';
+
+import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
+import { useAuthStore } from '@/store/auth'; // import the auth store we just created
+
+const router = useRouter();
+
+
+const { logUserOut } = useAuthStore(); // use authenticateUser action from  auth store
+const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+
+const logout = () => {
+  logUserOut();
+  router.push('/auth/login');
+};
 </script>
 
 <template>
@@ -36,7 +50,7 @@ import { UserIcon, MailIcon, ListCheckIcon } from 'vue-tabler-icons';
                 </v-list-item>
             </v-list>
             <div class="pt-4 pb-4 px-5 text-center">
-                <v-btn to="/auth/login" color="primary" variant="outlined" block>Logout</v-btn>
+                <v-btn  @click="logout" color="primary" variant="outlined" block>Logout</v-btn>
             </div>
         </v-sheet>
     </v-menu>
