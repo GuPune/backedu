@@ -12,17 +12,25 @@ export const useValidationStore = defineStore('validation', {
     },
   },
   actions: {
-    validateForm() {
-        alert('validateForm');
+      validateForm() {
+    
       this.errors = {};
 
       if (!this.username) {
+     
         this.errors.username = 'Username is required.';
+      
       }
 
       if (!this.password) {
         this.errors.password = 'Password is required.';
       }
+
+
+
+
+
+   
     },
   },
 });

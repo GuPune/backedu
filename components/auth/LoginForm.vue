@@ -4,10 +4,11 @@
 
         <v-col cols="12">
             <v-label class="font-weight-bold mb-1">Username</v-label>
-            <v-text-field variant="outlined" hide-details color="primary" v-model="authenticateUser.username" :rules="rules" label="Username"></v-text-field>
+            <v-text-field variant="outlined" hide-details color="primary" v-model="authenticateUser.username" label="Username"></v-text-field>
             <div class="bg-purple-darken-2 text-center" >
-               
+             <span v-if="store.errors.username">{{ store.errors.username }}</span>
             </div>
+            
         </v-col>
 
         <v-col cols="12">
@@ -39,7 +40,7 @@
         </v-col>
         <v-col cols="12" class="pt-0">
                <p data-testid="counter-values">
-                 Counter: {{ getCount }}
+                 Counter: {{ store.errors.username  }}
     
     </p>
 
@@ -70,14 +71,13 @@ import { storeToRefs } from 'pinia';
 import { defineComponent } from 'vue';
 import { useAuthStore } from '@/store/auth'; // import the auth store we just created
 
-
-
 const { authenticateUser } = useAuthStore(); // use authenticateUser action from  auth store
-
 const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
 
 const validationStore = useValidationStore();
 
+
+  const store = useValidationStore();
 
 
 
@@ -95,13 +95,23 @@ const login = async () => {
 //     router.push('/');
 //   }
 
-  validationStore.validateForm();
 
+
+ validationStore.validateForm();
+
+
+
+ 
 if (!validationStore.hasErrors) {
   // Submit form logic
-  console.log('login');
+  
 }
+
+
+
+
 };
+
 
 
 
