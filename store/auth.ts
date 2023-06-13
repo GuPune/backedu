@@ -9,6 +9,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     authenticated: false,
     loading: false,
+    count:11
   }),
   getters: {
     load(state) {
@@ -19,8 +20,6 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async authenticateUser({ username, password }: UserPayloadInterface) {
 
-      console.log('login');
- 
       // useFetch from nuxt 3
       const { data, pending }: any = await useFetch('https://dummyjson.com/auth/login', {
         method: 'post',

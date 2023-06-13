@@ -3,32 +3,40 @@
     <v-row class="d-flex mb-3">
 
         <v-col cols="12">
-            <v-label class="font-weight-bold mb-1">Username</v-label>
-            <v-text-field variant="outlined" hide-details color="primary" v-model="authenticateUser.username" label="Username"></v-text-field>
-            <div class="bg-purple-darken-2 text-center" >
-             <span v-if="store.errors.username">{{ store.errors.username }}</span>
-            </div>
+           
+            <v-text-field variant="outlined" hide-details color="primary" 
+            v-model="formData.username"
+      :error-messages="v$.username.$errors.map(e => e.$message)"
+      :counter="10"
+      label="Username"
+      required
+      @input="v$.username.$touch"
+      @blur="v$.username.$touch"
+            
+            ></v-text-field>
+     
             
         </v-col>
 
         <v-col cols="12">
-            <v-label class="font-weight-bold mb-1">Password</v-label>
-            <v-text-field variant="outlined" type="password"  hide-details color="primary" v-model="authenticateUser.password"></v-text-field>
-        </v-col>
-        <v-col cols="12" class="pt-0">
-            <div class="d-flex flex-wrap align-center ml-n2">
-                <v-checkbox v-model="checkbox"  color="primary" hide-details>
-                    <template v-slot:label class="text-body-1">Remeber this Device</template>
-                </v-checkbox>
-                <div class="ml-sm-auto">
-                    <NuxtLink to="/"
-                        class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium">Forgot
-                        Password ?</NuxtLink>
-                </div>
-            </div>
-        </v-col>
-        <v-col cols="12" class="pt-0"  v-if="!authenticated">
-            <v-btn @click.prevent="login" color="primary" size="large" block   flat>Sign in</v-btn>
+           
+           <v-text-field variant="outlined" hide-details color="primary" 
+           v-model="formData.password"
+     :error-messages="v$.password.$errors.map(e => e.$message)"
+     :counter="10"
+     label="Password"
+     required
+     @input="v$.password.$touch"
+     @blur="v$.password.$touch"
+           
+           ></v-text-field>
+    
+           
+       </v-col>
+
+      
+        <v-col cols="12" class="pt-0"  >
+            <v-btn   @click="login()" color="primary" size="large" block   flat>Sign in</v-btn>
         </v-col>
 
         
@@ -40,7 +48,7 @@
         </v-col>
         <v-col cols="12" class="pt-0">
                <p data-testid="counter-values">
-                 Counter: {{ store.errors.username  }}
+                 Counter: {{ getCount }}
     
     </p>
 
@@ -63,7 +71,69 @@
    
 </template>
 
-<script setup lang="ts">
+<script setup>
+
+
+import { storeToRefs } from 'pinia';
+import { defineComponent } from 'vue';
+import { useAuthStore } from '@/store/auth';
+import { useVuelidate } from '@vuelidate/core'
+import { reactive } from 'vue'
+import { email, required } from '@vuelidate/validators'
+import { useCounterStore } from "@/store/counter";
+
+
+
+
+const formData = reactive({
+  username: '',
+  password: '',
+});
+
+
+
+
+
+
+  const rules = {
+    username: { required },
+    password: { required },
+  }
+
+  const v$ = useVuelidate(rules, formData)
+  const { authenticateUser } = useAuthStore();
+  const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+
+  const router = useRouter();
+
+
+
+const login = async () => {
+    console.log(formData);
+v$.value.$validate();
+
+if (!v$.value.$error) {
+  await authenticateUser(formData); // call authenticateUser and pass the user object
+  // redirect to homepage if user is authenticated
+  if (authenticated) {
+    router.push('/');
+  }
+  }
+
+
+
+
+
+};
+const increment = async () => {
+
+};
+
+
+
+</script>
+
+<!-- <script setup lang="ts">
 
 import { useValidationStore } from '@/store/validation';
 import { useCounterStore } from "@/store/counter";
@@ -116,7 +186,7 @@ if (!validationStore.hasErrors) {
 
 
 
-</script>
+</script> -->
 
 
 
