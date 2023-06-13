@@ -109,7 +109,7 @@ const formData = reactive({
 
 
 const login = async () => {
-    console.log(formData);
+   
 v$.value.$validate();
 
 if (!v$.value.$error) {
