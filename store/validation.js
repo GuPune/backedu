@@ -17,11 +17,8 @@ export const useValidationStore = defineStore('validation', {
       this.errors = {};
 
       if (!this.username) {
-     
         this.errors.username = 'Username is required.';
-      
       }
-
       if (!this.password) {
         this.errors.password = 'Password is required.';
       }

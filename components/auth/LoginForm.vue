@@ -65,8 +65,8 @@ definePageMeta({
 
 
 const formData = reactive({
-  username: '',
-  password: '',
+  username: 'kminchelle',
+  password: '0lelplR',
 });
 
 
