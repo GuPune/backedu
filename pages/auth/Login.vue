@@ -11,12 +11,12 @@
                             <div class="d-flex justify-center py-4">
                                 <LayoutFullLogo />
                             </div>
-                            <p>Double count is {{ x.load }}</p>
+                           
                               <v-alert text="xxxxxxxxxxxxx" type="error" variant="tonal" v-if="x.load"></v-alert>
                             
                             <div class="text-body-1 text-muted text-center mb-3">Your Social Campaigns</div>
                             <AuthLoginForm />
-                            <v-progress-circular indeterminate  model-value="20" :size="119" v-if="x.load"></v-progress-circular>
+                        
                             <h6 class="text-h6 text-muted font-weight-medium d-flex justify-center align-center mt-3">
                                 New to Modernize?
                                 <NuxtLink to="/auth/register"
@@ -43,6 +43,7 @@ import { useAuthStore } from '@/store/auth'; // import the auth store we just cr
 definePageMeta({
   layout: "blank",
 });
+
 
 const x = useAuthStore()
 

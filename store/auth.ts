@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia';
+import ENV from '../env';
+
 
 interface UserPayloadInterface {
   username: string;
   password: string;
 }
+
+
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -20,7 +24,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async authenticateUser({ username, password }: UserPayloadInterface) {
       // useFetch from nuxt 3
-      const { error, data }: any = await useFetch('https://dummyjson.com/auth/login', {
+      const { error, data, statusCode }: any = await useFetch(ENV.API_AUTH, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: {
@@ -28,33 +32,42 @@ export const useAuthStore = defineStore('auth', {
           password,
         },
       });
-
-//       console.log(error.value.data);
-
-  //  alert(JSON.stringify(data.value));
-// // Might be interesting as well:
-// console.log(error.value.name, error.value.message);
-// alert(JSON.stringify(error.value.message));
-
-  
-      if(error.value.message){
-        alert('message');
-
+      if (data.value) {
+        const token = useCookie('token'); // useCookie new hook in nuxt 3
+        token.value = data?.value?.token; // set token to cookie
+        this.authenticated = true; // set authenticated  state value to true
       }
-  
-      // if (data.value) {
+      if (!data.value) {
+        this.loading = true;
+      }
+
+    //   const res = await useFetch('https://dummyjson.com/auth/login', {
+    //     method: 'POST',
+    //     body: {
+    //       username,
+    //       password,
+    //     },
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }
+    // });
+    // const output = await JSON.stringify(res);
+
+    // console.log('output',output);
+    
+
+     // if (data.value) {
       //   const token = useCookie('token'); // useCookie new hook in nuxt 3
       //   token.value = data?.value?.token; // set token to cookie
       //   this.authenticated = true; // set authenticated  state value to true
       // }
       // if (!data.value) {
       //   this.loading = true;
-
       // }
-      // if(error.value.message){
-      //   alert('message');
 
-      // }
+
+
+ 
  
 
     },
@@ -62,6 +75,7 @@ export const useAuthStore = defineStore('auth', {
       const token = useCookie('token'); // useCookie new hook in nuxt 3
       this.authenticated = false; // set authenticated  state value to false
       token.value = null; // clear the token cookie
+      this.loading = false;
     },
     ab() {
       this.loading = true;

@@ -13,7 +13,7 @@
       @input="v$.username.$touch"
       @blur="v$.username.$touch"
             
-            ></v-text-field>
+          v-if="!authenticated"></v-text-field>
      
             
         </v-col>
@@ -29,43 +29,20 @@
      @input="v$.password.$touch"
      @blur="v$.password.$touch"
            
-           ></v-text-field>
+           v-if="!authenticated"></v-text-field>
     
            
        </v-col>
 
       
         <v-col cols="12" class="pt-0"  >
-            <v-btn   @click="login()" color="primary" size="large" block   flat>Sign in</v-btn>
+            <v-btn   @click="login()" color="primary" size="large" block   flat  v-if="!authenticated">Sign in</v-btn>
+        </v-col>
+           <v-col cols="12" class="pt-0"  >
+            <v-btn   color="primary" size="large" block   flat v-if="authenticated">Log out</v-btn>
         </v-col>
 
         
-
-
-
-           <v-col cols="12" class="pt-0">
-          
-        </v-col>
-        <v-col cols="12" class="pt-0">
-               <p data-testid="counter-values">
-                 Counter: {{ getCount }}
-    
-    </p>
-
-
-            
-        </v-col>
-
-
-       
- 
-
-  <v-btn  @click="increment">
-  Button
-</v-btn>
-
-
-
         
     </v-row>
    
@@ -82,16 +59,15 @@ import { reactive } from 'vue'
 import { email, required } from '@vuelidate/validators'
 import { useCounterStore } from "@/store/counter";
 
-
+definePageMeta({
+    middleware: 'auth' // this should match the name of the file inside the middleware directory 
+})
 
 
 const formData = reactive({
   username: '',
   password: '',
 });
-
-
-
 
 
 
@@ -106,8 +82,9 @@ const formData = reactive({
 
   const router = useRouter();
 
-
-
+ if (authenticated) {
+    router.push('/');
+  }
 const login = async () => {
    
 v$.value.$validate();
@@ -115,9 +92,10 @@ v$.value.$validate();
 if (!v$.value.$error) {
   await authenticateUser(formData); // call authenticateUser and pass the user object
   // redirect to homepage if user is authenticated
-  if (authenticated) {
+   if (authenticated) {
     router.push('/');
   }
+
   }
 
 
