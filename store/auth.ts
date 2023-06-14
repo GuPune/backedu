@@ -37,17 +37,20 @@ export const useAuthStore = defineStore('auth', {
 // alert(JSON.stringify(error.value.message));
 
   
+      if(error.value.message){
+        alert('message');
 
+      }
   
-      if (data.value) {
-        const token = useCookie('token'); // useCookie new hook in nuxt 3
-        token.value = data?.value?.token; // set token to cookie
-        this.authenticated = true; // set authenticated  state value to true
-      }
-      if (!data.value) {
-        this.loading = true;
+      // if (data.value) {
+      //   const token = useCookie('token'); // useCookie new hook in nuxt 3
+      //   token.value = data?.value?.token; // set token to cookie
+      //   this.authenticated = true; // set authenticated  state value to true
+      // }
+      // if (!data.value) {
+      //   this.loading = true;
 
-      }
+      // }
       // if(error.value.message){
       //   alert('message');
 
