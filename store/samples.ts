@@ -105,7 +105,7 @@ export const SampleStore = defineStore('samples', {
   }
   ),
   getters: {
-    getPostAuthor: (state) => state.itemsPerPage
+    getPostAuthor: (state) => state.desserts
   },
   actions: {
     x() {

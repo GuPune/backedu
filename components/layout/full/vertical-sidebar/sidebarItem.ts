@@ -59,6 +59,16 @@ const sidebarItem: menu[] = [
         icon: ApertureIcon,
         to: '/sample-page'
     },
+    {
+        title: 'Users Manage',
+        icon: ApertureIcon,
+        to: '/users'
+    },
+    {
+        title: 'News Manage',
+        icon: ApertureIcon,
+        to: '/news'
+    },
 ];
 
 export default sidebarItem;
